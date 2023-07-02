@@ -31,3 +31,5 @@ int main() {
 ```
 ![](https://github.com/Shofuuu/Zynq-LCD16x2-C-Library/blob/main/Zynq_LCD_demo.gif)
 
+feel free to contact me: muhshofuwananwar@gmail.com or LinkedIn Muhammad Shofuwan Anwar
+
