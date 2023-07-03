@@ -50,11 +50,13 @@ void lcd_write (uint8_t str) {
 }
 
 void lcd_move (uint8_t cols, uint8_t rows) {
-	if (rows >= 2) {
+	const uint8_t row_array[2] = {0, 0x40};
+
+	if (rows > 1) {
 		rows = 1;
 	}
 
-	__command(LCD_SETDDRAMADDR | (cols + (rows * 0x40)));
+	__command(LCD_SETDDRAMADDR | (cols + row_array[rows]));
 }
 
 void lcd_create_char (uint8_t location, uint8_t charmap[]) {
