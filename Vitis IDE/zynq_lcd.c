@@ -4,8 +4,12 @@ void lcd_init (void) {
 	__lcd_functions = LCD_2LINE | LCD_5x8DOTS | LCD_4BITMODE;
 	usleep(50000);
 
-	GPIO &= ~(1 << LCD_RS);
-	GPIO &= ~(1 << LCD_EN);
+#ifdef USE_LCD_RW
+	GPIO_LCD &= ~(1 << LCD_RW);
+#endif
+
+	GPIO_LCD &= ~(1 << LCD_RS);
+	GPIO_LCD &= ~(1 << LCD_EN);
 
 	// start 8 bit mode, try to set 4 bit mode
 	__write4bits(0x03);
@@ -79,9 +83,9 @@ void __command (uint8_t command) {
 
 void __send (uint8_t value, uint8_t mode) {
 	if (mode) {
-		GPIO |= (1 << LCD_RS);
+		GPIO_LCD |= (1 << LCD_RS);
 	} else {
-		GPIO &= ~(1 << LCD_RS);
+		GPIO_LCD &= ~(1 << LCD_RS);
 	}
 
 	__write4bits(value >> 4);
@@ -91,9 +95,9 @@ void __send (uint8_t value, uint8_t mode) {
 void __write4bits (uint8_t data) {
 	for (uint8_t i = 0; i < 4; i++) {
 		if (data & (1 << i)) {
-			GPIO |= (1 << (i));
+			GPIO_LCD |= (1 << (i));
 		} else {
-			GPIO &= ~(1 << (i));
+			GPIO_LCD &= ~(1 << (i));
 		}
 	}
 
@@ -101,10 +105,10 @@ void __write4bits (uint8_t data) {
 }
 
 void __pulse_en (void) {
-	GPIO &= ~(1 << LCD_EN);
+	GPIO_LCD &= ~(1 << LCD_EN);
 	usleep(1);
-	GPIO |= (1 << LCD_EN);
+	GPIO_LCD |= (1 << LCD_EN);
 	usleep(1);
-	GPIO &= ~(1 << LCD_EN);
+	GPIO_LCD &= ~(1 << LCD_EN);
 	usleep(100);
 }
