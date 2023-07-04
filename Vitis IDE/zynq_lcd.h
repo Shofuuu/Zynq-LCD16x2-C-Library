@@ -11,6 +11,12 @@
 #define LCD_RS			4
 #define LCD_EN			5
 
+#define USE_LCD_RW	1
+
+#ifdef USE_LCD_RW
+#define LCD_RW			6 // tied this pin to 0 (low)
+#endif
+
 // function set
 #define LCD_2LINE		0x08
 #define LCD_5x8DOTS		0x00
@@ -41,7 +47,7 @@
 #define LCD_ENTRYSHIFTDECREMENT	0x00
 
 // register write
-#define GPIO	*(__base_addr_gpio + 0)
+#define GPIO_LCD	*(__base_addr_gpio + 0)
 
 static uint32_t* __base_addr_gpio = (uint32_t*)0x41200000;
 static uint8_t __lcd_functions = 0;
